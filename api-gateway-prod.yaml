@@ -1,5 +1,7 @@
 
 srping:
+  application:
+    name: api-gateway
   data:
     redis:
       host: localhost
