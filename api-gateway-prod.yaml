@@ -1,0 +1,19 @@
+spring:
+  config:
+    import: optional:configserver:http://config:config123@localhost:8888
+
+server:
+  port: 8671
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8671/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info, metrics
