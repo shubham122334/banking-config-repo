@@ -1,12 +1,9 @@
-spring:
-  application:
-    name: api-gateway
-  config:
-    import: configserver:http://localhost:8888
+srping:
+  data:
+    redis:
+      host: localhost
+      port: 6379
   cloud:
-    config:
-      username: config
-      password: config123
     gateway:
       server:
         webflux:
