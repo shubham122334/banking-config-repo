@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: api-gateway
+  config:
+    import: configserver:http://localhost:8888
+  cloud:
+    config:
+      username: config
+      password: config123
+    gateway:
+      server:
+        webflux:
+          default-filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter-replenishRate: 5
+                redis-rate-limiter-burstCapacity: 10
+          routes:
+            - id: account-service
+              uri: lb://ACCOUNT-SERVICE
+              predicates:
+                - Path= /api/account/**
+              filters:
+                - StripPrefix=1
+            - id: transaction-service
+              uri: lb://transaction-service
+              predicates:
+                - StripPrefix=1
+                - name: CircuitBreaker
+                  args:
+                    name: transactionCB
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+
+
+server:
+  port: 8085
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+          - prometheus
