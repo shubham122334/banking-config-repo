@@ -16,6 +16,19 @@ spring:
   flyway:
     enabled: true
     locations: classpath:db/migration
+    
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info, metrics
 
 server:
   port: 9000
