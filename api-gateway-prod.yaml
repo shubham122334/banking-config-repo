@@ -35,6 +35,12 @@ spring:
                   args:
                     name: transactionCB
                     fallbackUri: forward:/fallback/transaction
+            - id: auth-server
+              uri: lb://AUTH-SERVER
+              predicates:
+                - Path=/auth/**,/oauth2/**
+              filters:
+                - StripPrefix=1
 eureka:
   client:
     fetch-registry: true
