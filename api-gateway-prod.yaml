@@ -16,24 +16,25 @@ spring:
           default-filters:
             - name: RequestRateLimiter
               args:
-                radis-rate-limiter.replenishRate: 5
-                radis-rate-limiter.brustCapacity: 10
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
           routes:
             - id: account-service
-              uri: lb://acounts-service
+              uri: lb://ACCOUNT-SERVICE
               predicates:
                 - Path=/api/account/**
               filters:
                 - StripPrefix=1
             - id: transaction-service
-              uri: lb://transaction
+              uri: lb://TRANSACTION-SERVICE
               predicates:
-                - path=/api/transaction/**
+                - Path=/api/transaction/**
+              filters:
+                - StripPrefix=1
                 - name: CircuitBreaker
                   args:
                     name: transactionCB
-              filters:
-                - StripPrefix=1
+                    fallbackUri: forward:/fallback/transaction
 eureka:
   client:
     fetch-registry: true
