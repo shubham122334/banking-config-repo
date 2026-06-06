@@ -1,5 +1,5 @@
 
-srping:
+spring:
   data:
     redis:
       host: localhost
