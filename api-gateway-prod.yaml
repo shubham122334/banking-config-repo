@@ -19,12 +19,12 @@ spring:
                 redis-rate-limiter.replenishRate: 5
                 redis-rate-limiter.burstCapacity: 10
           routes:
-            # - id: account-service
-            #   uri: lb://ACCOUNT-SERVICE
-            #   predicates:
-            #     - Path=/api/account/**
-            #   filters:
-            #     - StripPrefix=1
+            - id: customer-service
+              uri: lb://CUSTOMER-SERVICE
+              predicates:
+                - Path=/api/customers/**
+              filters:
+                - StripPrefix=1
             # - id: transaction-service
             #   uri: lb://TRANSACTION-SERVICE
             #   predicates:
